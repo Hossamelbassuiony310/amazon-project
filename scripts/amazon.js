@@ -1,3 +1,6 @@
+import { cart } from "../data/cart.js";
+import { products } from "../data/products.js";
+
 console.log("This is amazon.js file");
 
 let productsHTML = "";
@@ -28,7 +31,7 @@ products.forEach((product) => {
       </div>
 
       <div class="product-quantity-container">
-        <select>
+        <select class="product-quantity js-product-quantity-${product.id}">
           ${Array.from(
             { length: 10 },
             (_, i) =>
@@ -39,16 +42,20 @@ products.forEach((product) => {
         </select>
       </div>
 
-      <div class="product-spacer"></div>
+      <div class="product-spacer-${product.id} product-spacer-style"></div>
 
-      <div class="added-to-cart">
+      <div class="added-to-cart js-added-to-cart-${
+        product.id
+      }" style="display: none;">
         <img src="images/icons/checkmark.png" />
         Added
       </div>
 
-      <button class="add-to-cart-button button-primary js-add-to-cart-button" data-product-id="${
-        product.id
-      }">Add to Cart</button>
+      <button 
+        class="add-to-cart-button button-primary js-add-to-cart-button" 
+        data-product-id="${product.id}">
+        Add to Cart
+      </button>
     </div>
   `;
 });
@@ -59,12 +66,17 @@ document.querySelectorAll(".js-add-to-cart-button").forEach((button) => {
   button.addEventListener("click", () => {
     const productId = button.dataset.productId;
 
+    const quantitySelect = document.querySelector(
+      `.js-product-quantity-${productId}`
+    );
+    const selectedQuantity = Number(quantitySelect.value);
+
     let matchingItem = cart.find((item) => item.productId === productId);
 
     if (matchingItem) {
-      matchingItem.quantity += 1;
+      matchingItem.quantity += selectedQuantity;
     } else {
-      cart.push({ productId, quantity: 1 });
+      cart.push({ productId, quantity: selectedQuantity });
     }
 
     let cartQuantity = 0;
@@ -75,5 +87,11 @@ document.querySelectorAll(".js-add-to-cart-button").forEach((button) => {
     document.querySelector(".js-cart-quantity").innerText = cartQuantity;
     console.log(cart);
     console.log("Cart Quantity:", cartQuantity);
+
+    const addedLabel = document.querySelector(`.product-spacer-${productId}`);
+    addedLabel.innerHTML = `<img src="images/icons/checkmark.png" /> Added`;
+    setTimeout(() => {
+      addedLabel.innerHTML = ``; // يختفي بعد ثانيتين
+    }, 2000);
   });
 });

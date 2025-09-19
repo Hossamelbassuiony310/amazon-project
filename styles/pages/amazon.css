@@ -154,3 +154,17 @@
   padding: 8px;
   border-radius: 50px;
 }
+
+.product-spacer-style {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start; /* 🔹 يخليها تظهر على اليمين */
+  font-size: 14px;
+  font-weight: 500;
+  color: green;
+  gap: 6px;
+}
+.product-spacer-style img {
+  width: 18px;
+  height: 18px;
+}
