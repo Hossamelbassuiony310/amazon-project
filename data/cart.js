@@ -29,3 +29,12 @@ export function removeFromCart(productId) {
 
   saveToStorage();
 }
+
+export function updateCartQuantity(productId, newQuantity) {
+  let matchingItem = cart.find((item) => item.productId === productId);
+
+  if (matchingItem) {
+    matchingItem.quantity = newQuantity;
+  }
+  saveToStorage();
+}
