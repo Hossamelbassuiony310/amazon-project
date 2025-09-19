@@ -1,4 +1,4 @@
-import { cart } from "../data/cart.js";
+import { cart, addToCart } from "../data/cart.js";
 import { products } from "../data/products.js";
 
 console.log("This is amazon.js file");
@@ -59,8 +59,16 @@ products.forEach((product) => {
     </div>
   `;
 });
-
 document.querySelector(".js-product-list").innerHTML = productsHTML;
+
+function updateCartQuantity() {
+  let cartQuantity = 0;
+  cart.forEach((item) => {
+    cartQuantity += Number(item.quantity) || 0;
+  });
+  document.querySelector(".js-cart-quantity").innerText = cartQuantity;
+  return cartQuantity;
+}
 
 document.querySelectorAll(".js-add-to-cart-button").forEach((button) => {
   button.addEventListener("click", () => {
@@ -69,22 +77,14 @@ document.querySelectorAll(".js-add-to-cart-button").forEach((button) => {
     const quantitySelect = document.querySelector(
       `.js-product-quantity-${productId}`
     );
+
     const selectedQuantity = Number(quantitySelect.value);
 
-    let matchingItem = cart.find((item) => item.productId === productId);
+    addToCart(productId, selectedQuantity);
 
-    if (matchingItem) {
-      matchingItem.quantity += selectedQuantity;
-    } else {
-      cart.push({ productId, quantity: selectedQuantity });
-    }
-
-    let cartQuantity = 0;
-    cart.forEach((item) => {
-      cartQuantity += Number(item.quantity) || 0;
-    });
-
+    const cartQuantity = updateCartQuantity();
     document.querySelector(".js-cart-quantity").innerText = cartQuantity;
+
     console.log(cart);
     console.log("Cart Quantity:", cartQuantity);
 
