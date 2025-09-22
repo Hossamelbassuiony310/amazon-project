@@ -1,4 +1,9 @@
-import { cart, removeFromCart, updateCartQuantity } from "../data/cart.js";
+import {
+  cart,
+  removeFromCart,
+  updateCartQuantity,
+  updateDeliveryOption,
+} from "../data/cart.js";
 import { products } from "../data/products.js";
 import { formatCurrency } from "./utils/money.js";
 import dayjs from "https://unpkg.com/supersimpledev@8.5.0/dayjs/esm/index.js";
@@ -7,37 +12,31 @@ import { deliveryOption } from "../data/deliveryOption.js";
 // ✅ Load delivery options from localStorage
 const savedOptions = JSON.parse(localStorage.getItem("deliveryOptions")) || {};
 
-// build cart summary
+// Build cart summary (apply saved delivery options first)
 cart.forEach((cartItem) => {
   if (savedOptions[cartItem.productId]) {
     cartItem.deliveryOptionId = savedOptions[cartItem.productId];
   }
-
-  const productId = cartItem.productId;
-  let matchingProduct = products.find((p) => p.id === productId);
-  const deliveryOptionId = cartItem.deliveryOptionId;
-
-  // ... rest of your cart.forEach code
 });
 
 let cartSummaryHTML = "";
 cart.forEach((cartItem) => {
   const productId = cartItem.productId;
-  let matchingProduct = products.find((p) => p.id === productId);
+  const matchingProduct = products.find((p) => p.id === productId);
   const deliveryOptionId = cartItem.deliveryOptionId;
 
-  let selectedDeliveryOption;
-  deliveryOption.forEach((option) => {
-    if (option.id === deliveryOptionId) {
-      selectedDeliveryOption = option;
-    }
-  });
+  let selectedDeliveryOption = deliveryOption.find(
+    (option) => option.id === deliveryOptionId
+  );
+
   const today = dayjs();
   const deliveryDate = today.add(selectedDeliveryOption.deliveryDays, "day");
   const dataString = deliveryDate.format("dddd, MMMM D");
 
   cartSummaryHTML += `
-  <div class="cart-item-container js-cart-item-container-${matchingProduct.id}">
+  <div class="cart-item-container js-cart-item-container-${matchingProduct.id}"
+       data-product-id="${matchingProduct.id}" 
+       data-delivery-option-id="${selectedDeliveryOption.id}">
     <div class="delivery-date">Delivery date: ${dataString}</div>
     <div class="cart-item-details-grid">
       <img class="product-image" src="${matchingProduct.image}" />
@@ -79,7 +78,7 @@ function deliveryOptions(matchingProduct, cartItem) {
       <div class="delivery-options-title">Choose a delivery option:</div>
   `;
 
-  deliveryOption.forEach((option, index) => {
+  deliveryOption.forEach((option) => {
     const today = dayjs();
     const deliveryDate = today.add(option.deliveryDays, "day");
     const dataString = deliveryDate.format("dddd, MMMM D");
@@ -114,7 +113,7 @@ function deliveryOptions(matchingProduct, cartItem) {
 
 document.querySelector(".js-order-summary").innerHTML = cartSummaryHTML;
 
-// ✅ Now the delivery option radios exist, so attach the listeners
+// ✅ Delivery option radio change handler
 document.querySelectorAll(".delivery-option-input").forEach((input) => {
   input.addEventListener("change", (event) => {
     const productId = event.target.name.replace("delivery-option-", "");
@@ -124,16 +123,22 @@ document.querySelectorAll(".delivery-option-input").forEach((input) => {
     const option = deliveryOption.find((o) => o.id === optionId);
 
     if (option) {
+      // 1️⃣ Update delivery date UI
       const newDate = dayjs()
         .add(option.deliveryDays, "day")
         .format("dddd, MMMM D");
       document.querySelector(
         `.js-cart-item-container-${productId} .delivery-date`
       ).innerText = `Delivery date: ${newDate}`;
+
+      // 2️⃣ Save selection in localStorage
       const savedOptions =
         JSON.parse(localStorage.getItem("deliveryOptions")) || {};
       savedOptions[productId] = optionId;
       localStorage.setItem("deliveryOptions", JSON.stringify(savedOptions));
+
+      // 3️⃣ Update cart state in memory
+      updateDeliveryOption(productId, optionId);
     }
   });
 });
@@ -147,7 +152,7 @@ document.querySelectorAll(".js-delete-link").forEach((link) => {
   });
 });
 
-// ✏️ Update
+// ✏️ Update quantity
 document.querySelectorAll(".js-update-link").forEach((link) => {
   link.addEventListener("click", () => {
     const productId = link.dataset.productId;

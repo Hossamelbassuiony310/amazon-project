@@ -46,3 +46,9 @@ export function updateCartQuantity(productId, newQuantity) {
   }
   saveToStorage();
 }
+
+export function updateDeliveryOption(productId, deliveryOptionId) {
+  let matchingItem = cart.find((item) => item.productId === productId);
+  matchingItem.deliveryOptionId = deliveryOptionId;
+  saveToStorage();
+}
