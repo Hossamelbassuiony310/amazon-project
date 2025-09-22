@@ -62,7 +62,7 @@ products.forEach((product) => {
 });
 document.querySelector(".js-product-list").innerHTML = productsHTML;
 
-function updateCartQuantity() {
+function renderCartQuantity() {
   let cartQuantity = 0;
   cart.forEach((item) => {
     cartQuantity += Number(item.quantity) || 0;
@@ -70,6 +70,8 @@ function updateCartQuantity() {
   document.querySelector(".js-cart-quantity").innerText = cartQuantity;
   return cartQuantity;
 }
+
+renderCartQuantity();
 
 document.querySelectorAll(".js-add-to-cart-button").forEach((button) => {
   button.addEventListener("click", () => {
@@ -83,16 +85,14 @@ document.querySelectorAll(".js-add-to-cart-button").forEach((button) => {
 
     addToCart(productId, selectedQuantity);
 
-    const cartQuantity = updateCartQuantity();
-    document.querySelector(".js-cart-quantity").innerText = cartQuantity;
-
+    const cartQuantity = renderCartQuantity();
     console.log(cart);
     console.log("Cart Quantity:", cartQuantity);
 
     const addedLabel = document.querySelector(`.product-spacer-${productId}`);
     addedLabel.innerHTML = `<img src="images/icons/checkmark.png" /> Added`;
     setTimeout(() => {
-      addedLabel.innerHTML = ``; // يختفي بعد ثانيتين
+      addedLabel.innerHTML = ``;
     }, 2000);
   });
 });
