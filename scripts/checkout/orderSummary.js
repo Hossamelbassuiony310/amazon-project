@@ -8,6 +8,7 @@ import { products } from "../../data/products.js";
 import { formatCurrency } from "./../utils/money.js";
 import dayjs from "https://unpkg.com/supersimpledev@8.5.0/dayjs/esm/index.js";
 import { deliveryOption } from "../../data/deliveryOption.js";
+import { renderPaymentSummary } from "./paymentSummary.js";
 
 function renderOrderSummary() {
   // ✅ Load delivery options from localStorage
@@ -141,6 +142,7 @@ function renderOrderSummary() {
 
         // 3️⃣ Update cart state in memory
         updateDeliveryOption(productId, optionId);
+        renderPaymentSummary();
       }
     });
   });
@@ -151,6 +153,7 @@ function renderOrderSummary() {
       const productId = link.dataset.productId;
       removeFromCart(productId);
       document.querySelector(`.js-cart-item-container-${productId}`).remove();
+      renderPaymentSummary();
     });
   });
 
