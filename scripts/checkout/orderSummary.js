@@ -190,6 +190,7 @@ function renderOrderSummary() {
           } else {
             alert("Quantity must be greater than 0");
           }
+          renderPaymentSummary();
         });
 
       // ❌ Cancel button
@@ -202,6 +203,7 @@ function renderOrderSummary() {
           ).outerHTML = `<span class="js-quantity-label-${productId}">${currentQty}</span>`;
           document.querySelector(`.js-save-btn-${productId}`).remove();
           document.querySelector(`.js-cancel-btn-${productId}`).remove();
+          renderPaymentSummary();
         });
     });
   });
