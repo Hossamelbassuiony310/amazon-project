@@ -9,6 +9,12 @@ class Product {
     };
     this.priceCents = productData.priceCents;
     this.keywords = productData.keywords ?? [];
+  }
+}
+
+class Clothing extends Product {
+  constructor(productData) {
+    super(productData);
     this.type = productData.type ?? null;
     this.sizeChartLink = productData.sizeChartLink ?? null;
   }
@@ -486,6 +492,9 @@ export const product = [
     keywords: ["sweaters", "hoodies", "apparel", "mens"],
   },
 ].map((productData) => {
+  if (productData.type === "clothing") {
+    return new Clothing(productData);
+  }
   return new Product(productData);
 });
 
