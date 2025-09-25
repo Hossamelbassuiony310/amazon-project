@@ -1,7 +1,10 @@
 class Cart {
+  #cartItem;
+  #storageKey;
+
   constructor(storageKey) {
-    this.storageKey = storageKey;
-    this.cartItem = JSON.parse(localStorage.getItem(this.storageKey)) || [
+    this.#storageKey = storageKey;
+    this.#cartItem = JSON.parse(localStorage.getItem(this.#storageKey)) || [
       {
         productId: "e43638ce-6aa0-4b85-b27f-e1d07eb678c6",
         quantity: 2,
@@ -15,19 +18,23 @@ class Cart {
     ];
   }
 
+  getItems() {
+    return this.#cartItem;
+  }
+
   saveToStorage() {
-    localStorage.setItem(this.storageKey, JSON.stringify(this.cartItem));
+    localStorage.setItem(this.#storageKey, JSON.stringify(this.#cartItem));
   }
 
   addToCart(productId, selectedQuantity) {
-    let matchingItem = this.cartItem.find(
+    let matchingItem = this.#cartItem.find(
       (item) => item.productId === productId
     );
 
     if (matchingItem) {
       matchingItem.quantity += selectedQuantity;
     } else {
-      this.cartItem.push({
+      this.#cartItem.push({
         productId,
         quantity: selectedQuantity,
         deliveryOptionId: "1",
@@ -37,14 +44,14 @@ class Cart {
   }
 
   removeFromCart(productId) {
-    this.cartItem = this.cartItem.filter(
+    this.#cartItem = this.#cartItem.filter(
       (item) => item.productId !== productId
     );
     this.saveToStorage();
   }
 
   updateCartQuantity(productId, newQuantity) {
-    let matchingItem = this.cartItem.find(
+    let matchingItem = this.#cartItem.find(
       (item) => item.productId === productId
     );
 
@@ -55,7 +62,7 @@ class Cart {
   }
 
   updateDeliveryOption(productId, deliveryOptionId) {
-    let matchingItem = this.cartItem.find(
+    let matchingItem = this.#cartItem.find(
       (item) => item.productId === productId
     );
     if (matchingItem) {
