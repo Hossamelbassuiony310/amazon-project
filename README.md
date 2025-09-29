@@ -19,8 +19,8 @@ The project is fully **containerized with Docker + Docker Compose** so you can r
 
 ### 1️⃣ Clone the repository
 ```bash
-git clone https://github.com/<your-username>/<your-repo>.git
-cd <your-repo>
+git clone [https://github.com/<your-username>/<your-repo>.git](https://github.com/Hossamelbassuiony310/amazon-project.git)
+cd amazon-project
 ```
 
 ### 2️⃣ Run with Docker Compose
