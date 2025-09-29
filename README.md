@@ -97,4 +97,5 @@ I’m a DevOps Engineer with hands-on experience in cloud platforms, CI/CD, and 
 📫 **Reach me at:**  
 - 📧 Email: [hossambesso7@gmail.com](mailto:hossambesso7@gmail.com)  
 - 🔗 LinkedIn: [Hossam El Bassuiony](https://www.linkedin.com/in/hossam-el-bassuiony-43b72622a/)  
-- 💻 GitHub: [Hossamelbassuiony310](https://github.com/Hossamelbassuiony310)  
+- 💻 GitHub: [Hossamelbassuiony310](https://github.com/Hossamelbassuiony310)
+- 💻 Upowrk: [Hossam El Sayed](https://www.upwork.com/freelancers/~016e96fa44933e8afb)  
