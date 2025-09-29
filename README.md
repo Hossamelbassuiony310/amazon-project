@@ -64,3 +64,23 @@ Base image: nginx:alpine
 Static files served from /usr/share/nginx/html
 
 Custom Nginx config handles clean routes.
+
+---
+
+# ✨ About the Author
+
+👨‍💻 **Hossam El Bassuiony**  
+*DevOps Engineer | Passionate about Web Development & Backend*  
+📍 Egypt
+
+---
+
+💡 **About Me**  
+I’m a DevOps Engineer with hands-on experience in cloud platforms, CI/CD, and infrastructure automation. I’m also passionate about learning **web development** and **backend engineering**, constantly exploring new tools and technologies to build scalable and efficient systems.
+
+---
+
+📫 **Reach me at:**  
+- 📧 Email: [hossambesso7@gmail.com](mailto:hossambesso7@gmail.com)  
+- 🔗 LinkedIn: [Hossam El Bassuiony](https://www.linkedin.com/in/hossam-el-bassuiony-43b72622a/)  
+- 💻 GitHub: [Hossamelbassuiony310](https://github.com/Hossamelbassuiony310)  
