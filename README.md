@@ -69,7 +69,7 @@ Custom Nginx config handles clean routes.
 
 # ✨ About the Author
 
-👨‍💻 **Hossam El Bassuiony**  
+👨‍💻 **Hossam El-Bassuiony**  
 *DevOps Engineer | Passionate about Web Development & Backend*  
 📍 Egypt
 
